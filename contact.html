@@ -10,31 +10,31 @@
     <link rel="canonical" href="https://zleep.dev/contact.html">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-    <!-- Open Graph -->
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zleep.dev/contact.html">
     <meta property="og:title" content="Contact | zleep.dev">
     <meta property="og:description" content="Get in touch with zleep.dev using Email or Discord.">
     <meta property="og:image" content="https://zleep.dev/assets/img/preview.png">
 
-    <!-- Twitter -->
+
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://zleep.dev/contact.html">
     <meta property="twitter:title" content="Contact | zleep.dev">
     <meta property="twitter:description" content="Get in touch with zleep.dev using Email or Discord.">
     <meta property="twitter:image" content="https://zleep.dev/assets/img/preview.png">
 
-    <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 
-    <!-- Icons -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -57,7 +57,7 @@
         }
     </script>
 
-    <!-- Custom CSS -->
+
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -84,17 +84,25 @@
                     height="40" width="40" />
             </a>
 
-            <!-- Mobile Centered Text -->
+
             <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:hidden">
                 <span class="text-xl font-bold font-heading text-white tracking-wide">zleep.dev</span>
             </div>
 
 
             <div class="flex md:order-2 space-x-3 items-center ml-auto">
-                <button onclick="toggleLanguage()"
-                    class="text-gray-400 hover:text-white font-mono text-sm border border-white/10 rounded px-3 py-1.5 transition-all hover:border-brand-purple/50 active:scale-95">
-                    <span id="lang-btn-text">EN</span>
-                </button>
+                <div
+                    class="relative flex items-center bg-black rounded-full p-1 cursor-pointer border border-white/10 w-32 h-10 shadow-inner">
+                    <div id="lang-slider"
+                        class="absolute left-1 top-1 w-[calc(50%-4px)] h-[calc(100%-8px)] bg-[#1e40af] rounded-full transition-transform duration-300 shadow-lg shadow-blue-900/50">
+                    </div>
+                    <div onclick="setLanguage('tr')" id="lang-tr"
+                        class="z-10 w-1/2 text-center text-sm font-bold text-gray-500 transition-colors duration-300 select-none tracking-wide">
+                        TR</div>
+                    <div onclick="setLanguage('en')" id="lang-en"
+                        class="z-10 w-1/2 text-center text-sm font-bold text-gray-500 transition-colors duration-300 select-none tracking-wide">
+                        EN</div>
+                </div>
                 <a href="contact.html"
                     class="hidden sm:inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-white transition-all border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 focus:ring-4 focus:ring-brand-purple/20">
                     <span class="lang-tr">İletişim</span>
@@ -200,7 +208,7 @@
                     </span>
                 </div>
 
-                <!-- Legal Links -->
+
                 <div class="flex space-x-4 text-xs text-gray-500 font-mono justify-self-center">
                     <a href="privacy.html" class="hover:text-gray-300 transition-colors">
                         <span class="lang-tr">Gizlilik Politikası</span>
@@ -213,7 +221,7 @@
                     </a>
                 </div>
 
-                <!-- Contact / Socials -->
+
                 <div class="flex items-center justify-center md:justify-end gap-4">
                     <span class="text-xs font-bold text-gray-500 uppercase tracking-wider hidden md:block">
                         <span class="lang-tr">İletişim</span>
@@ -236,7 +244,7 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+
     <script src="assets/js/config.js"></script>
     <script src="assets/js/analytics.js"></script>
     <script src="assets/js/main.js"></script>

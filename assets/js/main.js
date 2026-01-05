@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Language Initialization
     const savedLang = localStorage.getItem('selectedLang');
     if (savedLang) {
         setLanguage(savedLang);
     } else {
-        // Auto-detect browser language
         const userLang = navigator.language || navigator.userLanguage;
         if (userLang.startsWith('tr')) {
             setLanguage('tr');
@@ -13,18 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Initialize Cookie Consent
     initCookieConsent();
-
-    // 3. Initialize Carousel
     initCarousel();
-
-
 });
 
-/* =========================================
-   Language Logic
-   ========================================= */
 function toggleLanguage() {
     const currentLang = localStorage.getItem('selectedLang') === 'tr' ? 'en' : 'tr';
     setLanguage(currentLang);
@@ -34,44 +24,41 @@ function setLanguage(lang) {
     localStorage.setItem('selectedLang', lang);
     document.documentElement.lang = lang;
 
-    // Toggle visibility based on class
     document.querySelectorAll('.lang-tr').forEach(el => {
-        el.style.display = lang === 'tr' ? 'block' : 'none';
-        // Handle span/inline elements if necessary, but 'block' usually breaks flow in paragraphs.
-        // A better approach for inline items is to remove 'display: none' (style='') or set 'display: inline'
-        // But the previous HTML structure mostly used blocks or spans that handle block fine.
-        // If inline issues occur, we can refine this. For now, matching the HTML structure.
-        if (el.tagName === 'SPAN') {
-            el.style.display = lang === 'tr' ? 'inline' : 'none';
-        }
+        el.style.display = lang === 'tr' ? (el.tagName === 'SPAN' ? 'inline' : 'block') : 'none';
     });
 
     document.querySelectorAll('.lang-en').forEach(el => {
-        el.style.display = lang === 'en' ? 'block' : 'none';
-        if (el.tagName === 'SPAN') {
-            el.style.display = lang === 'en' ? 'inline' : 'none';
-        }
+        el.style.display = lang === 'en' ? (el.tagName === 'SPAN' ? 'inline' : 'block') : 'none';
     });
 
-    // Update Language Button Text
-    const btnText = document.getElementById('lang-btn-text');
-    if (btnText) {
-        btnText.textContent = lang === 'tr' ? 'EN' : 'TR';
+    const slider = document.getElementById('lang-slider');
+    const trBtn = document.getElementById('lang-tr');
+    const enBtn = document.getElementById('lang-en');
+
+    if (slider && trBtn && enBtn) {
+        if (lang === 'tr') {
+            slider.style.transform = 'translateX(0)';
+            trBtn.classList.remove('text-gray-500');
+            trBtn.classList.add('text-white');
+            enBtn.classList.remove('text-white');
+            enBtn.classList.add('text-gray-500');
+        } else {
+            slider.style.transform = 'translateX(100%)';
+            enBtn.classList.remove('text-gray-500');
+            enBtn.classList.add('text-white');
+            trBtn.classList.remove('text-white');
+            trBtn.classList.add('text-gray-500');
+        }
     }
 }
 
-/* =========================================
-   Cookie Consent Logic
-   ========================================= */
 function initCookieConsent() {
     if (localStorage.getItem('cookieConsent') === 'true') return;
 
     const banner = document.createElement('div');
     banner.id = 'cookie-banner';
     banner.className = 'fixed bottom-4 right-4 md:bottom-8 md:right-8 max-w-sm w-[calc(100%-2rem)] bg-[#0f172a]/90 backdrop-blur-md border border-white/10 p-6 rounded-2xl shadow-2xl z-50 transform transition-all duration-500 translate-y-20 opacity-0';
-
-    // Determine initial text based on CURRENT language setting (already set in step 1)
-    // We'll dynamic insert based on class logic like the rest of the site so it toggles instantly
 
     banner.innerHTML = `
         <div class="flex flex-col gap-4">
@@ -90,16 +77,13 @@ function initCookieConsent() {
 
     document.body.appendChild(banner);
 
-    // Apply current language visibility to the new banner elements immediately
     const currentLang = localStorage.getItem('selectedLang') || 'en';
-    setLanguage(currentLang); // Re-run setLanguage to force update specifically for these new DOM elements
+    setLanguage(currentLang);
 
-    // Animate in
     setTimeout(() => {
         banner.classList.remove('translate-y-20', 'opacity-0');
     }, 100);
 
-    // Handle Click
     const btn = document.getElementById('accept-cookies');
     if (btn) {
         btn.onclick = () => {
@@ -110,9 +94,6 @@ function initCookieConsent() {
     }
 }
 
-/* =========================================
-   Carousel Logic (Slide-by-Slide)
-   ========================================= */
 function initCarousel() {
     const track = document.getElementById('carouselTrack');
     const prevBtn = document.getElementById('prevBtn');
@@ -120,12 +101,10 @@ function initCarousel() {
 
     if (!track) return;
 
-    // Config
     const transitionDuration = 700;
     let isAnimating = false;
     let autoScrollInterval;
 
-    // Helper: Get Item Width dynamically
     const getItemWidth = () => {
         const card = track.children[0];
         if (!card) return 0;
@@ -147,7 +126,6 @@ function initCarousel() {
             track.appendChild(track.firstElementChild);
             track.style.transform = 'translateX(0)';
 
-            // Allow next animation slightly after reset
             setTimeout(() => {
                 isAnimating = false;
             }, 50);
@@ -160,15 +138,12 @@ function initCarousel() {
 
         const itemWidth = getItemWidth();
 
-        // Move last item to start immediately (hidden)
         track.style.transition = 'none';
         track.prepend(track.lastElementChild);
         track.style.transform = `translateX(-${itemWidth}px)`;
 
-        // Force reflow
         void track.offsetWidth;
 
-        // Animate to 0
         track.style.transition = `transform ${transitionDuration}ms ease-in-out`;
         track.style.transform = 'translateX(0)';
 
@@ -186,7 +161,6 @@ function initCarousel() {
         if (autoScrollInterval) clearInterval(autoScrollInterval);
     };
 
-    // Event Listeners
     if (nextBtn) nextBtn.addEventListener('click', () => {
         moveNext();
         stopAutoPlay();
@@ -199,12 +173,10 @@ function initCarousel() {
         startAutoPlay();
     });
 
-    // Pause on Hover
     const wrapper = document.getElementById('carouselWindow') || track.parentElement;
     wrapper.addEventListener('mouseenter', stopAutoPlay);
     wrapper.addEventListener('mouseleave', startAutoPlay);
 
-    // Touch Support (Basic Swipe)
     let touchStartX = 0;
     wrapper.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -213,12 +185,11 @@ function initCarousel() {
 
     wrapper.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) moveNext(); // Swipe Left
-        if (touchEndX - touchStartX > 50) movePrev(); // Swipe Right
+        if (touchStartX - touchEndX > 50) moveNext();
+        if (touchEndX - touchStartX > 50) movePrev();
         startAutoPlay();
     }, { passive: true });
 
-    // Start
     startAutoPlay();
 }
 
