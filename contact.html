@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact | zleep.dev</title>
+    <meta name="description"
+        content="Get in touch with zleep.dev for community management and QA testing services. Contact via Email or Discord.">
+    <link rel="canonical" href="https://zleep.dev/contact.html">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zleep.dev/contact.html">
+    <meta property="og:title" content="Contact | zleep.dev">
+    <meta property="og:description" content="Get in touch with zleep.dev using Email or Discord.">
+    <meta property="og:image" content="https://zleep.dev/assets/img/preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://zleep.dev/contact.html">
+    <meta property="twitter:title" content="Contact | zleep.dev">
+    <meta property="twitter:description" content="Get in touch with zleep.dev using Email or Discord.">
+    <meta property="twitter:image" content="https://zleep.dev/assets/img/preview.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#8b5cf6',
+                            blue: '#3b82f6',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="selection:bg-brand-purple selection:text-white bg-[#050505] text-slate-200">
+
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div
+            class="absolute top-0 left-1/4 w-96 h-96 bg-brand-purple/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30">
+        </div>
+        <div
+            class="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-blue/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30">
+        </div>
+    </div>
+
+    <a href="index.html"
+        class="hidden md:block fixed top-8 left-8 z-[60] transition-transform hover:scale-110 duration-300 animate-float-logo">
+        <img src="assets/img/logo_transparent.png" alt="zleep.dev" class="h-24 w-auto" height="96" width="96">
+    </a>
+
+    <nav class="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
+            <a href="index.html" class="flex items-center md:hidden group z-20">
+                <img src="assets/img/logo_transparent.png" alt="zleep.dev" class="h-10 w-auto object-contain"
+                    height="40" width="40" />
+            </a>
+
+            <!-- Mobile Centered Text -->
+            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:hidden">
+                <span class="text-xl font-bold font-heading text-white tracking-wide">zleep.dev</span>
+            </div>
+
+
+            <div class="flex md:order-2 space-x-3 items-center ml-auto">
+                <button onclick="toggleLanguage()"
+                    class="text-gray-400 hover:text-white font-mono text-sm border border-white/10 rounded px-3 py-1.5 transition-all hover:border-brand-purple/50 active:scale-95">
+                    <span id="lang-btn-text">EN</span>
+                </button>
+                <a href="contact.html"
+                    class="hidden sm:inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-white transition-all border border-white/10 rounded-lg hover:bg-white/5 hover:border-white/20 focus:ring-4 focus:ring-brand-purple/20">
+                    <span class="lang-tr">İletişim</span>
+                    <span class="lang-en">Contact</span>
+                </a>
+            </div>
+
+            <div
+                class="items-center justify-between hidden w-full md:flex md:w-auto md:absolute md:left-1/2 md:top-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 md:flex-row md:mt-0">
+                    <li>
+                        <a href="index.html#about"
+                            class="block py-2 px-3 text-gray-300 hover:text-white hover:text-gradient transition-colors">
+                            <span class="lang-tr">Hakkımda</span>
+                            <span class="lang-en">About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#services"
+                            class="block py-2 px-3 text-gray-300 hover:text-white hover:text-gradient transition-colors">
+                            <span class="lang-tr">Hizmetler</span>
+                            <span class="lang-en">Services</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html#testimonials"
+                            class="block py-2 px-3 text-gray-300 hover:text-white hover:text-gradient transition-colors">
+                            <span class="lang-tr">Referanslar</span>
+                            <span class="lang-en">Reviews</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
+        <div class="max-w-4xl w-full mx-auto">
+
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <span class="lang-tr">İletişime Geçin</span>
+                    <span class="lang-en">Get in Touch</span>
+                </h1>
+                <p class="text-gray-400 text-lg">
+                    <span class="lang-tr">Projeleriniz veya sorularınız için bana ulaşın.</span>
+                    <span class="lang-en">Contact me for your projects or questions.</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-2xl text-center group hover:border-[#5865F2]/50 transition-colors">
+                    <div
+                        class="w-20 h-20 bg-[#5865F2]/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-[#5865F2] transition-colors duration-300">
+                        <i class="fab fa-discord text-4xl text-[#5865F2] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Discord</h2>
+                    <p class="text-gray-400 mb-6 font-mono text-sm">
+                        <span class="lang-tr">Beni ekleyip DM gönderebilirsiniz.</span>
+                        <span class="lang-en">Add me and send a DM.</span>
+                    </p>
+                    <a href="https://discord.com/users/232052258748104705" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-[#5865F2] hover:bg-[#4752c4] text-white rounded-xl transition-all transform hover:scale-105 font-medium w-full">
+                        <i class="fas fa-user-plus mr-2"></i> zleep
+                    </a>
+                </div>
+
+                <div class="glass p-8 rounded-2xl text-center group hover:border-red-500/50 transition-colors">
+                    <div
+                        class="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500 transition-colors duration-300">
+                        <i class="fas fa-envelope text-4xl text-red-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Email</h2>
+                    <p class="text-gray-400 mb-6 font-mono text-sm">
+                        <span class="lang-tr">Projeniz ve ihtiyaçlarınız hakkında detaylı bilgi vererek iletişime
+                            geçebilirsiniz.</span>
+                        <span class="lang-en">You can get in touch by providing detailed information about your project
+                            and needs.</span>
+                    </p>
+                    <a href="mailto:contact@zleep.dev"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl transition-all transform hover:scale-105 font-medium w-full">
+                        <i class="fas fa-paper-plane mr-2"></i> contact@zleep.dev
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-6 bg-black border-t border-white/5 mt-auto">
+        <div class="mx-auto max-w-screen-xl text-center px-4">
+            <div class="flex flex-col md:grid md:grid-cols-3 gap-6 items-center">
+                <div
+                    class="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left justify-self-center md:justify-self-start">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <img src="assets/img/logo_transparent.png" alt="zleep.dev"
+                            class="h-8 w-auto group-hover:scale-110 transition-transform" height="32" width="32">
+                        <span
+                            class="text-lg font-mono font-bold text-white group-hover:text-brand-purple transition-colors">zleep.dev</span>
+                    </a>
+                    <span class="hidden md:inline text-gray-700">|</span>
+                    <span class="text-xs text-gray-600">
+                        &copy; 2026 All Rights Reserved.
+                    </span>
+                </div>
+
+                <!-- Legal Links -->
+                <div class="flex space-x-4 text-xs text-gray-500 font-mono justify-self-center">
+                    <a href="privacy.html" class="hover:text-gray-300 transition-colors">
+                        <span class="lang-tr">Gizlilik Politikası</span>
+                        <span class="lang-en">Privacy Policy</span>
+                    </a>
+                    <span class="text-gray-700">|</span>
+                    <a href="terms.html" class="hover:text-gray-300 transition-colors">
+                        <span class="lang-tr">Kullanım Şartları</span>
+                        <span class="lang-en">Terms of Service</span>
+                    </a>
+                </div>
+
+                <!-- Contact / Socials -->
+                <div class="flex items-center justify-center md:justify-end gap-4">
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider hidden md:block">
+                        <span class="lang-tr">İletişim</span>
+                        <span class="lang-en">Contact</span>
+                    </span>
+                    <div class="flex space-x-5">
+                        <a href="mailto:contact@zleep.dev"
+                            class="text-gray-400 hover:text-red-500 text-lg transition-colors transform hover:scale-110"
+                            title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://discord.com/users/232052258748104705" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-400 hover:text-[#5865F2] text-lg transition-colors transform hover:scale-110"
+                            title="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/analytics.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

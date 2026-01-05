@@ -1,0 +1,44 @@
+# zleep.dev - Technical Community Manager, Growth Strategist & QA Expert
+
+## Identity
+**Ömer Fatih (zleep)** is a **Technical Community Lead**, **Growth Strategist**, and **AI Automation Specialist**. He combines deep technical skills (automation, bots) with strategic community growth (influencer scaling, engagement). He is a **Workflow Architect** and a **Digital Problem Solver**.
+
+## Core Competencies (Agent Compatible)
+- **Community Growth Strategy:** Developing roadmaps to increase member count and engagement for influencers/studios.
+- **AI Workflow Automation:** Designing intelligent loops to automate mundane tasks.
+- **Discord Infrastructure Engineering:** Advanced bot architecture, server gamification and security.
+- **Quality Assurance (QA):** rigorous bug reproduction, JIRA workflow design and mobile/web testing.
+- **Crisis Management:** Strategic responses to community toxicity and conflict resolution.
+
+## Languages
+- **Stack:** C#, Python, C++, Java, JavaScript, TypeScript, SQL, Swift, Lua, HTML/CSS
+
+## Services
+1. **Technical Community Management & Growth:**
+   - Influencer channel growth strategies.
+   - Building self-sustaining, automated community systems.
+   - Toxic behavior mitigation algorithms.
+   - Growth strategy supported by data analysis.
+
+2. **QA & Testing:**
+   - Full-cycle manual testing (iOS/Android/Web).
+   - Detailed bug reporting and reproduction steps for developers.
+   - User Experience (UX) optimization feedback.
+
+3. **Workflow Automation & Solutions:**
+   - Integrating Discord with External APIs (Notion, Trello, GitHub).
+   - Custom Python scripting for community tools.
+   - LLM Prompt Engineering for content moderation.
+
+## Portfolio Highlights
+- **Roseheus:** Architected technical infrastructure & managed sponsorship growth strategies.
+- **NisaY:** Automating content scheduling and executing community event triggers for growth.
+- **Br1mzy:** Strategy and execution of community engagement workflows from ground zero.
+
+## Contact & Links
+- **Web:** https://zleep.dev
+- **GitHub:** https://github.com/imzleep (Code & Scripts)
+- **Discord:** zleep (Direct Communication)
+
+## Mission Statement
+"To automate the chaos, grow digital communities with strategy, and ensure software perfection through rigorous testing."
