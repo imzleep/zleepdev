@@ -45,9 +45,14 @@ zleepdev/
 │   └── img/
 │       ├── logo_transparent.png
 │       ├── favicon.png
-│       └── testimonials/
+│       └── testimonials/       # Client/Streamer avatars
 └── README.md
 ```
+
+## 🌟 Recent Work Showcase
+The site now includes a dedicated "Recent Work" section showcasing key projects:
+- **ABI Builder**: A visual database for Arena Breakout weapon builds.
+- **ABI Randomizer**: A random loadout generator for the same game.
 
 
 
