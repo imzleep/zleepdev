@@ -138,43 +138,39 @@ h1, h2, h3, h4, h5, h6, .font-heading {
    MERKEZ LOGO (GRAND FLOATING LOGO)
    ========================================================================== */
 .core-wrapper {
-    position: absolute;
-    top: 52%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 175px;
-    height: 175px;
+    position: relative;
+    width: 165px;
+    height: 165px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 20;
     will-change: transform, filter;
-    transform-style: preserve-3d;
     cursor: pointer;
-    animation: grandFloatingBob 5s ease-in-out infinite alternate;
-}
-
-@keyframes grandFloatingBob {
-    0% { 
-        transform: translate(-50%, -50%) translateY(0px) rotate(0deg); 
-    }
-    50% { 
-        transform: translate(-50%, -50%) translateY(-12px) rotate(1.5deg); 
-    }
-    100% { 
-        transform: translate(-50%, -50%) translateY(-18px) rotate(-1.5deg); 
-    }
+    perspective: 1000px;
 }
 
 .core-logo-img {
-    width: 160px;
-    height: 160px;
+    width: 155px;
+    height: 155px;
     object-fit: contain;
     filter: drop-shadow(0 4px 22px rgba(0, 210, 255, 0.7));
     will-change: transform, filter;
     pointer-events: none;
     transition: filter 0.3s ease;
-    animation: logoGlowBreath 3.5s ease-in-out infinite alternate;
+    animation: grandFloatingBob 5s ease-in-out infinite alternate, logoGlowBreath 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes grandFloatingBob {
+    0% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-8px) rotate(1.2deg); 
+    }
+    100% { 
+        transform: translateY(-14px) rotate(-1.2deg); 
+    }
 }
 
 @keyframes logoGlowBreath {
@@ -274,20 +270,19 @@ h1, h2, h3, h4, h5, h6, .font-heading {
    ========================================================================== */
 @media (max-width: 640px) {
     .core-wrapper {
-        width: 120px;
-        height: 120px;
-        top: 50%;
+        width: 115px;
+        height: 115px;
     }
     .core-logo-img {
-        width: 105px;
-        height: 105px;
+        width: 100px;
+        height: 100px;
     }
     .chaos-item {
         padding: 5px 10px;
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         border-radius: 8px;
         gap: 5px;
-        max-width: calc(48vw - 12px);
+        max-width: calc(48vw - 10px);
     }
     .chaos-item span {
         overflow: hidden;
@@ -297,10 +292,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     .solution-cube {
         height: 38px;
         padding: 0 12px;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         border-radius: 10px;
-        gap: 7px;
-        max-width: calc(60vw - 10px);
+        gap: 6px;
+        max-width: calc(58vw - 8px);
     }
     .solution-cube span {
         overflow: hidden;

@@ -472,10 +472,32 @@ function initHeroNeuralAnimation() {
         }
     }
 
+    function getCoreCenter() {
+        const stage = document.getElementById('heroAnimStage') || heroScene;
+        const coreEl = document.getElementById('coreWrapper') || document.getElementById('coreLogo');
+        const isMobile = window.innerWidth < 640;
+
+        let centerX = stage ? stage.offsetWidth * 0.5 : window.innerWidth * 0.5;
+        let centerY = stage ? stage.offsetHeight * 0.5 : window.innerHeight * 0.5;
+
+        if (coreEl && stage) {
+            const stageRect = stage.getBoundingClientRect();
+            const coreRect = coreEl.getBoundingClientRect();
+            if (stageRect.width > 0 && coreRect.width > 0) {
+                centerX = (coreRect.left - stageRect.left) + (coreRect.width * 0.5);
+                centerY = (coreRect.top - stageRect.top) + (coreRect.height * 0.5);
+            }
+        }
+
+        return { centerX, centerY, isMobile, stage };
+    }
+
     function spawnAndVacuumProblem(scenarioIndex, itemIndex, totalInScenario, onImpact) {
         if (!window.gsap) return;
 
-        const stage = document.getElementById('heroAnimStage') || heroScene;
+        const { centerX, centerY, isMobile, stage } = getCoreCenter();
+        if (!stage) return;
+
         const lang = getActiveLanguage();
         const scenarios = lang === 'tr' ? scenariosTR : scenariosEN;
         const currentScenario = scenarios[scenarioIndex] || scenarios[0];
@@ -490,23 +512,24 @@ function initHeroNeuralAnimation() {
         
         stage.appendChild(el);
 
-        const isMobile = window.innerWidth < 640;
-        const centerX = stage.offsetWidth * 0.5;
-        const centerY = stage.offsetHeight * (isMobile ? 0.50 : 0.52);
+        // Sol alanda doğma koordinatları (Kesinlikle sol tarafta)
+        const leftZoneWidth = centerX * 0.75;
+        const startX = isMobile 
+            ? (centerX * 0.38) + (Math.random() * (centerX * 0.32) - (centerX * 0.16))
+            : (centerX * 0.42) + (Math.random() * (centerX * 0.40) - (centerX * 0.20));
+        
+        const startY = centerY + (Math.random() * (isMobile ? 130 : 230) - (isMobile ? 65 : 115));
+        const randomRotateZ = (Math.random() * (isMobile ? 12 : 20) - (isMobile ? 6 : 10));
 
-        const minDistance = isMobile ? Math.min(centerX - 10, 130) : 220;
-        const maxSpread = isMobile ? 30 : 130;
-        const spawnDistanceX = minDistance + (Math.random() * maxSpread);
-        const startX = Math.max(8, centerX - spawnDistanceX);
-        const startY = centerY + (Math.random() * (isMobile ? 120 : 240) - (isMobile ? 60 : 120));
-        const randomRotateZ = (Math.random() * (isMobile ? 14 : 24) - (isMobile ? 7 : 12));
-
-        const targetX = centerX - (isMobile ? 22 : 45);
-        const targetY = centerY - (isMobile ? 12 : 25);
+        // Hedef: Logonun tam ölü merkezi
+        const targetX = centerX;
+        const targetY = centerY;
 
         gsap.set(el, {
             x: startX,
             y: startY,
+            xPercent: -50,
+            yPercent: -50,
             rotationZ: randomRotateZ,
             scale: isMobile ? 0.75 : 0.85,
             opacity: 0
@@ -525,7 +548,7 @@ function initHeroNeuralAnimation() {
             x: targetX,
             y: targetY,
             rotationZ: randomRotateZ * 2.2,
-            duration: 1.4,
+            duration: 1.35,
             ease: "power2.in",
             onComplete: () => {
                 const isLastItem = (itemIndex === totalInScenario - 1);
@@ -550,7 +573,9 @@ function initHeroNeuralAnimation() {
     function spawnAndConveyMasterSolution(scenarioIndex) {
         if (!window.gsap) return;
 
-        const stage = document.getElementById('heroAnimStage') || heroScene;
+        const { centerX, centerY, isMobile, stage } = getCoreCenter();
+        if (!stage) return;
+
         const lang = getActiveLanguage();
         const scenarios = lang === 'tr' ? scenariosTR : scenariosEN;
         const currentScenario = scenarios[scenarioIndex] || scenarios[0];
@@ -565,17 +590,16 @@ function initHeroNeuralAnimation() {
         
         stage.appendChild(el);
 
-        const isMobile = window.innerWidth < 640;
-        const centerX = stage.offsetWidth * 0.5;
-        const centerY = stage.offsetHeight * (isMobile ? 0.50 : 0.52);
-
-        const startY = centerY - (isMobile ? 18 : 25);
-        const startX = centerX + (isMobile ? 38 : 85);
-        const endX = stage.offsetWidth + (isMobile ? 80 : 350);
+        // Çıkış: Logonun merkezinden başlayıp sağa doğru akar
+        const startY = centerY;
+        const startX = centerX + (isMobile ? 12 : 24);
+        const endX = stage.offsetWidth + (isMobile ? 100 : 350);
 
         gsap.set(el, {
             x: startX,
             y: startY,
+            xPercent: 0,
+            yPercent: -50,
             scale: 0.2,
             opacity: 0
         });

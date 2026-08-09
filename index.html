@@ -253,7 +253,7 @@
     <!-- ==========================================================================
        HERO: DİJİTAL PROBLEM ÇÖZÜCÜ (CANLI NÖRAL AĞ & FLOATING LOGO)
        ========================================================================== -->
-    <section class="hero-animation-section relative min-h-screen flex flex-col justify-between items-center px-4" id="about">
+    <section class="hero-animation-section relative min-h-[660px] sm:min-h-[720px] md:min-h-[760px] lg:min-h-screen flex flex-col justify-between items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12" id="about">
         
         <!-- AI & LLM Machine-Readable Semantic Bio (RAG & Search Snapshot) -->
         <div class="sr-only" aria-hidden="false">
@@ -273,29 +273,31 @@
         <div id="heroAnimStage" class="absolute inset-0 overflow-hidden pointer-events-none z-15"></div>
 
         <!-- Üst Metin & Başlık Alanı -->
-        <div class="max-w-screen-xl w-full mx-auto text-center relative z-20 pt-16 md:pt-24">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-tight text-white md:text-5xl lg:text-6xl">
+        <div class="max-w-screen-xl w-full mx-auto text-center relative z-20">
+            <h1 class="mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
                 <span class="lang-tr">Complex problems. <br class="hidden sm:inline"><span class="text-gradient">Simple solutions.</span></span>
                 <span class="lang-en">Complex problems. <br class="hidden sm:inline"><span class="text-gradient">Simple solutions.</span></span>
             </h1>
 
-            <p class="text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            <p class="text-xs sm:text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed font-normal px-2">
                 <span class="lang-tr">Kaosunuzu net ve uygulanabilir adımlara dönüştürüyorum. Siz sorunları getirin, ben çözümleri inşa edeyim.</span>
                 <span class="lang-en">Deconstructing your chaos into clear and actionable choices. You bring the problems, I build the solutions.</span>
             </p>
         </div>
 
-        <!-- Merkez: 3D Serbest Süzülen Logo (Grand Floating Logo) -->
-        <div class="core-wrapper" id="coreWrapper">
-            <img src="assets/img/logo_transparent.png" 
-                 alt="zleep.dev Core Logo" 
-                 class="core-logo-img" 
-                 id="coreLogo"
-                 onerror="this.onerror=null; this.src='assets/img/logo.png';">
+        <!-- Merkez: 3D Serbest Süzülen Logo (Ayrılmış Güvenli Alan / Anti-Collapse Middle Stage) -->
+        <div class="relative z-20 my-auto py-4 sm:py-6 md:py-8 flex items-center justify-center min-h-[130px] sm:min-h-[170px] w-full">
+            <div class="core-wrapper" id="coreWrapper">
+                <img src="assets/img/logo_transparent.png" 
+                     alt="zleep.dev Core Logo" 
+                     class="core-logo-img" 
+                     id="coreLogo"
+                     onerror="this.onerror=null; this.src='assets/img/logo.png';">
+            </div>
         </div>
 
         <!-- Alt Butonlar -->
-        <div class="relative z-20 pb-12 flex flex-col sm:flex-row justify-center items-center gap-4 mt-3">
+        <div class="relative z-20 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mt-2">
             <a href="#services"
                 class="inline-flex justify-center items-center py-3.5 px-8 sm:px-9 text-sm sm:text-base font-bold text-center text-white rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 focus:ring-4 focus:ring-cyan-500/25 transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20 min-w-[190px] sm:min-w-[210px]">
                 <span class="lang-tr">Neler Yapıyorum?</span>
