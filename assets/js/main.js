@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initCookieConsent();
     initCarousel();
+    initProjectShowcase();
+    initHeroNeuralAnimation();
 });
 
 function toggleLanguage() {
@@ -191,5 +193,471 @@ function initCarousel() {
     }, { passive: true });
 
     startAutoPlay();
+}
+
+/* ==========================================================================
+   RECENT WORK: MASTER-DETAIL PROJE SEÇİCİ & OTOMATİK LOOP DÖNGÜSÜ
+   ========================================================================== */
+const projectList = ['abibuilder', 'mentorpanel'];
+let currentProjectIndex = 0;
+let projectRotationTimer = null;
+
+function selectProject(projectId, isUserClick = false) {
+    const tabs = document.querySelectorAll('.project-tab-btn');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    const activeTab = document.getElementById(`tab-${projectId}`);
+    if (activeTab) activeTab.classList.add('active');
+
+    projectList.forEach(id => {
+        const detailEl = document.getElementById(`detail-${id}`);
+        if (!detailEl) return;
+
+        if (id === projectId) {
+            detailEl.classList.remove('hidden');
+            if (window.gsap) {
+                gsap.fromTo(detailEl, 
+                    { opacity: 0, y: 15, scale: 0.98 }, 
+                    { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power2.out" }
+                );
+            }
+        } else {
+            detailEl.classList.add('hidden');
+        }
+    });
+
+    const newIdx = projectList.indexOf(projectId);
+    if (newIdx !== -1) currentProjectIndex = newIdx;
+
+    if (isUserClick) {
+        restartProjectAutoRotation();
+    }
+}
+
+function startProjectAutoRotation() {
+    stopProjectAutoRotation();
+    projectRotationTimer = setInterval(() => {
+        currentProjectIndex = (currentProjectIndex + 1) % projectList.length;
+        selectProject(projectList[currentProjectIndex], false);
+    }, 12000);
+}
+
+function stopProjectAutoRotation() {
+    if (projectRotationTimer) {
+        clearInterval(projectRotationTimer);
+        projectRotationTimer = null;
+    }
+}
+
+function restartProjectAutoRotation() {
+    stopProjectAutoRotation();
+    startProjectAutoRotation();
+}
+
+function initProjectShowcase() {
+    const container = document.getElementById('recentWorkContainer');
+    if (!container) return;
+
+    container.addEventListener('mouseenter', stopProjectAutoRotation);
+    container.addEventListener('mouseleave', startProjectAutoRotation);
+
+    startProjectAutoRotation();
+}
+
+/* ==========================================================================
+   HERO: CANLI NÖRAL AĞ & 2D DİJİTAL PROBLEM ÇÖZÜCÜ ANİMASYON MOTORU
+   ========================================================================== */
+function initHeroNeuralAnimation() {
+    const canvas = document.getElementById('neuralCanvas');
+    const heroScene = document.getElementById('about');
+    const coreWrapper = document.getElementById('coreWrapper');
+    const coreLogo = document.getElementById('coreLogo');
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let nodes = [];
+    let packets = [];
+    const nodeCount = 145;
+    const maxDistance = 160;
+
+    function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Node {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() > 0.82 ? 3.6 : 2.0;
+            this.isHub = this.radius > 3.0;
+            this.pulse = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.pulse += 0.03;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            const currentRadius = this.isHub ? this.radius + Math.sin(this.pulse) * 0.8 : this.radius;
+            ctx.arc(this.x, this.y, currentRadius, 0, Math.PI * 2);
+            ctx.fillStyle = this.isHub ? 'rgba(0, 220, 255, 0.85)' : 'rgba(99, 102, 241, 0.55)';
+            ctx.shadowBlur = this.isHub ? 12 : 4;
+            ctx.shadowColor = '#00d2ff';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    class DataPacket {
+        constructor(fromNode, toNode) {
+            this.from = fromNode;
+            this.to = toNode;
+            this.progress = 0;
+            this.speed = 0.009 + Math.random() * 0.012;
+        }
+
+        update() {
+            this.progress += this.speed;
+        }
+
+        draw() {
+            const currentX = this.from.x + (this.to.x - this.from.x) * this.progress;
+            const currentY = this.from.y + (this.to.y - this.from.y) * this.progress;
+
+            ctx.beginPath();
+            ctx.arc(currentX, currentY, 2.0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.95)';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#00f0ff';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    for (let i = 0; i < nodeCount; i++) {
+        nodes.push(new Node());
+    }
+
+    function renderNeuralNetwork() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i++) {
+            nodes[i].update();
+            nodes[i].draw();
+
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < maxDistance) {
+                    const opacity = (1 - dist / maxDistance) * 0.32;
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
+                    ctx.lineWidth = 1.0;
+                    ctx.stroke();
+
+                    if (nodes[i].isHub && Math.random() < 0.0025 && packets.length < 35) {
+                        packets.push(new DataPacket(nodes[i], nodes[j]));
+                    }
+                }
+            }
+        }
+
+        for (let p = packets.length - 1; p >= 0; p--) {
+            packets[p].update();
+            packets[p].draw();
+            if (packets[p].progress >= 1) {
+                packets.splice(p, 1);
+            }
+        }
+
+        requestAnimationFrame(renderNeuralNetwork);
+    }
+
+    renderNeuralNetwork();
+
+    /* ==========================================================================
+       DİNAMİK ÇOK DİLLİ 4 BAĞLANTILI PROBLEM & ÇÖZÜM SENARYOSU (TR / EN)
+       ========================================================================== */
+    const scenariosEN = [
+        {
+            inputs: ["Missed Sponsors", "Burnout Cycle", "Unplanned Grind"],
+            output: { title: "Optimized Growth Plan", icon: "📈" }
+        },
+        {
+            inputs: ["Unorganized Reports", "Dropping Player Count"],
+            output: { title: "Actionable Product Feedback", icon: "🎯" }
+        },
+        {
+            inputs: ["Messy Events", "Low Traffic", "Unstructured Socials", "Chaotic Community"],
+            output: { title: "Self Sustaining Ecosystem", icon: "🌐" }
+        },
+        {
+            inputs: ["Manual Entry", "Spreadsheet Hell", "Lost Track of Tasks"],
+            output: { title: "Digital Workflow", icon: "⚡" }
+        }
+    ];
+
+    const scenariosTR = [
+        {
+            inputs: ["Kaçan Sponsorluklar", "Tükenmişlik Döngüsü", "Plansız Efor"],
+            output: { title: "Optimize Büyüme Planı", icon: "📈" }
+        },
+        {
+            inputs: ["Düzensiz Raporlar", "Düşen Oyuncu Sayısı"],
+            output: { title: "Uygulanabilir Ürün Geri Bildirimi", icon: "🎯" }
+        },
+        {
+            inputs: ["Düzensiz Etkinlikler", "Düşük Trafik", "Yapılandırılmamış Sosyal Medya", "Kaotik Topluluk"],
+            output: { title: "Kendi Kendine Yeten Ekosistem", icon: "🌐" }
+        },
+        {
+            inputs: ["Manuel Veri Girişi", "Tablo Cehennemi", "Kaybolan Görevler"],
+            output: { title: "Dijital İş Akışı & Otomasyon", icon: "⚡" }
+        }
+    ];
+
+    function getActiveLanguage() {
+        return localStorage.getItem('selectedLang') || 'en';
+    }
+
+    /* ==========================================================================
+       GSAP REAKSİYON & SENTEZ MOTORU
+       ========================================================================== */
+    function triggerCoreReaction(isFinalSynthesis = false) {
+        if (!window.gsap) return;
+
+        if (isFinalSynthesis) {
+            gsap.fromTo(coreLogo, 
+                {
+                    scale: 1.14,
+                    filter: 'drop-shadow(0 0 34px rgba(0, 240, 255, 1))'
+                },
+                {
+                    scale: 1,
+                    filter: 'drop-shadow(0 4px 22px rgba(0, 210, 255, 0.7))',
+                    duration: 0.45,
+                    ease: "power2.out"
+                }
+            );
+        } else {
+            gsap.fromTo(coreLogo, 
+                {
+                    scale: 1.05,
+                    filter: 'drop-shadow(0 0 25px rgba(255, 51, 102, 0.85))'
+                },
+                {
+                    scale: 1,
+                    filter: 'drop-shadow(0 4px 22px rgba(0, 210, 255, 0.7))',
+                    duration: 0.28,
+                    ease: "power2.out"
+                }
+            );
+        }
+    }
+
+    function spawnAndVacuumProblem(scenarioIndex, itemIndex, totalInScenario, onImpact) {
+        if (!window.gsap) return;
+
+        const stage = document.getElementById('heroAnimStage') || heroScene;
+        const lang = getActiveLanguage();
+        const scenarios = lang === 'tr' ? scenariosTR : scenariosEN;
+        const currentScenario = scenarios[scenarioIndex] || scenarios[0];
+        const problemText = currentScenario.inputs[itemIndex] || currentScenario.inputs[0];
+
+        const el = document.createElement('div');
+        el.className = 'chaos-item';
+        el.innerHTML = `
+            <div class="chaos-dot"></div>
+            <span>${problemText}</span>
+        `;
+        
+        stage.appendChild(el);
+
+        const isMobile = window.innerWidth < 640;
+        const centerX = stage.offsetWidth * 0.5;
+        const centerY = stage.offsetHeight * (isMobile ? 0.50 : 0.52);
+
+        const minDistance = isMobile ? Math.min(centerX - 10, 130) : 220;
+        const maxSpread = isMobile ? 30 : 130;
+        const spawnDistanceX = minDistance + (Math.random() * maxSpread);
+        const startX = Math.max(8, centerX - spawnDistanceX);
+        const startY = centerY + (Math.random() * (isMobile ? 120 : 240) - (isMobile ? 60 : 120));
+        const randomRotateZ = (Math.random() * (isMobile ? 14 : 24) - (isMobile ? 7 : 12));
+
+        const targetX = centerX - (isMobile ? 22 : 45);
+        const targetY = centerY - (isMobile ? 12 : 25);
+
+        gsap.set(el, {
+            x: startX,
+            y: startY,
+            rotationZ: randomRotateZ,
+            scale: isMobile ? 0.75 : 0.85,
+            opacity: 0
+        });
+
+        const tl = gsap.timeline();
+
+        tl.to(el, {
+            opacity: 1,
+            scale: isMobile ? 0.92 : 1,
+            duration: 0.45,
+            ease: "power2.out"
+        });
+
+        tl.to(el, {
+            x: targetX,
+            y: targetY,
+            rotationZ: randomRotateZ * 2.2,
+            duration: 1.4,
+            ease: "power2.in",
+            onComplete: () => {
+                const isLastItem = (itemIndex === totalInScenario - 1);
+                triggerCoreReaction(isLastItem);
+                if (typeof onImpact === 'function') onImpact(isLastItem);
+            }
+        }, "-=0.15");
+
+        tl.to(el, {
+            scale: 0,
+            opacity: 0,
+            duration: 0.2,
+            ease: "power1.in",
+            onComplete: () => {
+                el.remove();
+            }
+        });
+
+        return tl;
+    }
+
+    function spawnAndConveyMasterSolution(scenarioIndex) {
+        if (!window.gsap) return;
+
+        const stage = document.getElementById('heroAnimStage') || heroScene;
+        const lang = getActiveLanguage();
+        const scenarios = lang === 'tr' ? scenariosTR : scenariosEN;
+        const currentScenario = scenarios[scenarioIndex] || scenarios[0];
+        const solutionData = currentScenario.output;
+
+        const el = document.createElement('div');
+        el.className = 'solution-cube';
+        el.innerHTML = `
+            <div class="solution-icon-wrap">${solutionData.icon}</div>
+            <span class="solution-title text-cyan-50 font-bold">${solutionData.title}</span>
+        `;
+        
+        stage.appendChild(el);
+
+        const isMobile = window.innerWidth < 640;
+        const centerX = stage.offsetWidth * 0.5;
+        const centerY = stage.offsetHeight * (isMobile ? 0.50 : 0.52);
+
+        const startY = centerY - (isMobile ? 18 : 25);
+        const startX = centerX + (isMobile ? 38 : 85);
+        const endX = stage.offsetWidth + (isMobile ? 80 : 350);
+
+        gsap.set(el, {
+            x: startX,
+            y: startY,
+            scale: 0.2,
+            opacity: 0
+        });
+
+        const tl = gsap.timeline();
+
+        tl.to(el, {
+            scale: isMobile ? 0.92 : 1,
+            opacity: 1,
+            duration: 0.55,
+            ease: "back.out(1.6)"
+        });
+
+        tl.to(el, {
+            x: endX,
+            duration: isMobile ? 4.2 : 5.5,
+            ease: "none",
+            onComplete: () => {
+                el.remove();
+            }
+        }, "-=0.1");
+
+        return tl;
+    }
+
+    let currentScenarioIndex = 0;
+
+    function runNextBatch() {
+        if (!window.gsap) return;
+        const lang = getActiveLanguage();
+        const scenarios = lang === 'tr' ? scenariosTR : scenariosEN;
+        const scenarioIndex = currentScenarioIndex;
+        const currentScenario = scenarios[scenarioIndex];
+        const count = currentScenario.inputs.length;
+
+        const batchTimeline = gsap.timeline({
+            onComplete: () => {
+                currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+                gsap.delayedCall(1.2, runNextBatch);
+            }
+        });
+
+        for (let i = 0; i < count; i++) {
+            const delay = i * 0.65;
+
+            batchTimeline.add(() => {
+                spawnAndVacuumProblem(scenarioIndex, i, count, (isLastItem) => {
+                    if (isLastItem) {
+                        spawnAndConveyMasterSolution(scenarioIndex);
+                    }
+                });
+            }, delay);
+        }
+
+        batchTimeline.to({}, { duration: (count * 0.65) + 2.6 });
+    }
+
+    if (heroScene && coreWrapper && coreLogo && window.gsap) {
+        runNextBatch();
+
+        /* ==========================================================================
+           3D MOUSE PARALAKS & HOVER
+           ========================================================================== */
+        window.addEventListener('mousemove', (e) => {
+            const xPos = (e.clientX / window.innerWidth - 0.5) * 18;
+            const yPos = (e.clientY / window.innerHeight - 0.5) * 18;
+
+            gsap.to(coreWrapper, {
+                rotationY: xPos,
+                rotationX: -yPos,
+                duration: 0.8,
+                ease: "power1.out"
+            });
+        });
+
+        coreWrapper.addEventListener('mouseenter', () => {
+            gsap.to(coreLogo, { scale: 1.1, duration: 0.35, ease: "back.out(2)" });
+        });
+
+        coreWrapper.addEventListener('mouseleave', () => {
+            gsap.to(coreLogo, { scale: 1, duration: 0.35, ease: "power2.out" });
+        });
+    }
 }
 

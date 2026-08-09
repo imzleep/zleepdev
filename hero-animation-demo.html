@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zleep.dev - All-Round Digital Problem Solver | GSAP Hero Animation</title>
+    
+    <!-- Google Fonts: Syne, Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        /* ==========================================================================
+           1. RESET & RENK DEĞİŞKENLERİ
+           ========================================================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        :root {
+            --bg-color: #09090b;
+            --core-neon-blue: #00d2ff;
+            --core-neon-cyan: #00f0ff;
+            --core-neon-purple: #8a2be2;
+            --chaos-red: #ff3366;
+            --chaos-amber: #ff9900;
+            --solution-blue: #38bdf8;
+            --solution-emerald: #10b981;
+            --conveyor-glow: rgba(0, 210, 255, 0.4);
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: var(--font-body);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ==========================================================================
+           2. SÜREKLİ ÇALIŞAN KOMPLEKS NÖRAL NODE AĞI (SOOTHING CYBER INDIGO)
+           ========================================================================== */
+        .hero-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #0a0e1a 0%, #04060b 80%);
+            perspective: 1000px;
+        }
+
+        /* En Arka Katman: Gözü Dinlendiren Hafif Flulaştırılmış Nöral Node Canvas */
+        .neural-network-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.75;
+            filter: blur(2.5px); /* Gözü yormayan derinlik bulanıklığı */
+            will-change: transform;
+        }
+
+        /* Üst Başlık */
+        .hero-header {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-top: 8px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           3. MERKEZ LOGO (BÜYÜTÜLMÜŞ, CANLI SÜZÜLEN / GRAND FLOATING LOGO)
+           ========================================================================== */
+        .core-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 175px;
+            height: 175px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            will-change: transform, filter;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            animation: grandFloatingBob 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes grandFloatingBob {
+            0% { 
+                transform: translate(-50%, -50%) translateY(0px) rotate(0deg); 
+            }
+            50% { 
+                transform: translate(-50%, -50%) translateY(-12px) rotate(1.5deg); 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translateY(-18px) rotate(-1.5deg); 
+            }
+        }
+
+        /* Heybetli Logo Görseli (160px x 160px, Nefes Alan Neon Levitasyon) */
+        .core-logo-img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 22px rgba(0, 210, 255, 0.7));
+            will-change: transform, filter;
+            pointer-events: none;
+            transition: filter 0.3s ease;
+            animation: logoGlowBreath 3.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlowBreath {
+            0% {
+                filter: drop-shadow(0 4px 18px rgba(0, 210, 255, 0.6));
+            }
+            100% {
+                filter: drop-shadow(0 6px 28px rgba(0, 240, 255, 0.85));
+            }
+        }
+
+        /* ==========================================================================
+           4. SOL ALAN: KAOTİK PROBLEM KAROLARI (TACTILE FRACTURED TILES)
+           ========================================================================== */
+        .chaos-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 8px 14px;
+            min-width: 70px;
+            border-radius: 9px;
+            background: linear-gradient(145deg, rgba(38, 12, 22, 0.95) 0%, rgba(18, 6, 12, 0.98) 100%);
+            border: 1px solid rgba(255, 51, 102, 0.65);
+            color: #ffd2dc;
+            font-family: var(--font-mono);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.6),
+                0 0 18px rgba(255, 51, 102, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            z-index: 15;
+            pointer-events: none;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .chaos-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 12px;
+            margin-bottom: 2px;
+        }
+
+        .chaos-tag {
+            font-size: 0.58rem;
+            color: #ff3366;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .chaos-score {
+            font-size: 0.52rem;
+            color: #fca5a5;
+            font-weight: 700;
+            background: rgba(255, 51, 102, 0.2);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .chaos-main-text {
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.4);
+        }
+
+        .chaos-sub-val {
+            font-size: 0.55rem;
+            color: #94a3b8;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        /* ==========================================================================
+           5. SAĞ ALAN: RAFİNE MASTER ÇÖZÜMLER (PRISTINE CRYSTAL CAPSULE)
+           ========================================================================== */
+        .solution-cube {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 11px 22px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(16, 32, 54, 0.95) 0%, rgba(8, 18, 32, 0.98) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.7);
+            color: #f0f9ff;
+            font-family: var(--font-body);
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(0, 210, 255, 0.28),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                inset 0 0 15px rgba(0, 210, 255, 0.1);
+            z-index: 16;
+            pointer-events: none;
+            will-change: transform, opacity;
+            white-space: nowrap;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .solution-icon-wrap {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border: 1px solid rgba(0, 210, 255, 0.4);
+            color: #00f0ff;
+            font-size: 0.95rem;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+
+        .solution-badge {
+            font-size: 0.6rem;
+            color: var(--core-neon-cyan);
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+
+        .solution-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-subtitle { font-size: 0.8rem; }
+            .core-wrapper { width: 120px; height: 120px; }
+            .core-container { width: 100px; height: 100px; }
+            .core-logo-img { width: 62px; height: 62px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container" id="heroScene">
+        <!-- 1. En Dip Katman: Canlı Çalışan Kompleks Nöral Node Ağı -->
+        <canvas class="neural-network-canvas" id="neuralCanvas"></canvas>
+
+        <!-- 2. Üst Başlık -->
+        <header class="hero-header">
+            <h1 class="hero-title">Digital Problem Solver</h1>
+            <p class="hero-subtitle">Community Lead &bull; QA Specialist &bull; Workflow Architect</p>
+        </header>
+
+        <!-- 3. Merkez: Serbest Süzülen 3D Logo (Kutusuz) -->
+        <div class="core-wrapper" id="coreWrapper">
+            <img src="assets/img/logo_transparent.png" 
+                 alt="zleep.dev Core Logo" 
+                 class="core-logo-img" 
+                 id="coreLogo"
+                 onerror="this.onerror=null; this.src='assets/img/logo.png';">
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       GSAP & NEURAL NODE NETWORK MASTER SCRIPT
+       ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroScene = document.getElementById('heroScene');
+            const coreWrapper = document.getElementById('coreWrapper');
+            const coreLogo = document.getElementById('coreLogo');
+            const canvas = document.getElementById('neuralCanvas');
+            const ctx = canvas.getContext('2d');
+
+            /* ==========================================================================
+               ARKA PLAN: SÜREKLİ ÇALIŞAN KOMPLEKS NÖRAL NODE AĞI MOTORU
+               - 140+ Hareketli Nöral Düğüm (Nodes)
+               - Çoklu Dinamik Bağlantı Hatları (Synaptic Links)
+               - Hatlar Üzerinde Akan Canlı Veri Paketleri (Data Packets)
+               ========================================================================== */
+            let width, height;
+            let nodes = [];
+            let packets = [];
+            const nodeCount = 140;
+            const maxDistance = 165;
+
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Node {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.radius = Math.random() > 0.82 ? 3.6 : 2.0;
+                    this.isHub = this.radius > 3.0;
+                    this.pulse = Math.random() * Math.PI * 2;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.pulse += 0.03;
+
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    const currentRadius = this.isHub ? this.radius + Math.sin(this.pulse) * 0.8 : this.radius;
+                    ctx.arc(this.x, this.y, currentRadius, 0, Math.PI * 2);
+                    // Gözü dinlendiren soft cyan & indigo paleti
+                    ctx.fillStyle = this.isHub ? 'rgba(0, 220, 255, 0.85)' : 'rgba(99, 102, 241, 0.55)';
+                    ctx.shadowBlur = this.isHub ? 12 : 4;
+                    ctx.shadowColor = '#00d2ff';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Veri Paketleri (Ağ üzerinde gezen sinyaller)
+            class DataPacket {
+                constructor(fromNode, toNode) {
+                    this.from = fromNode;
+                    this.to = toNode;
+                    this.progress = 0;
+                    this.speed = 0.009 + Math.random() * 0.012;
+                }
+
+                update() {
+                    this.progress += this.speed;
+                }
+
+                draw() {
+                    const currentX = this.from.x + (this.to.x - this.from.x) * this.progress;
+                    const currentY = this.from.y + (this.to.y - this.from.y) * this.progress;
+
+                    ctx.beginPath();
+                    ctx.arc(currentX, currentY, 2.0, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0, 240, 255, 0.95)';
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#00f0ff';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Düğümleri Başlat
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push(new Node());
+            }
+
+            function renderNeuralNetwork() {
+                ctx.clearRect(0, 0, width, height);
+
+                // 1. Bağlantı Çizgilerini Çiz
+                for (let i = 0; i < nodes.length; i++) {
+                    nodes[i].update();
+                    nodes[i].draw();
+
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < maxDistance) {
+                            const opacity = (1 - dist / maxDistance) * 0.32;
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            // Gözü yormayan soft indigo/cyan geçişi
+                            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
+                            ctx.lineWidth = 1.0;
+                            ctx.stroke();
+
+                            // Rastgele veri paketi fırlat
+                            if (nodes[i].isHub && Math.random() < 0.0025 && packets.length < 35) {
+                                packets.push(new DataPacket(nodes[i], nodes[j]));
+                            }
+                        }
+                    }
+                }
+
+                // 2. Veri Paketlerini Güncelle ve Çiz
+                for (let p = packets.length - 1; p >= 0; p--) {
+                    packets[p].update();
+                    packets[p].draw();
+                    if (packets[p].progress >= 1) {
+                        packets.splice(p, 1);
+                    }
+                }
+
+                requestAnimationFrame(renderNeuralNetwork);
+            }
+
+            renderNeuralNetwork();
+
+            /* ==========================================================================
+               PROBLEM & ÇÖZÜM HAVUZU
+               ========================================================================== */
+            const problemPool = [
+                { tag: "DISCORD", main: "Raid Attack", sub: "Spam Wave #01", score: "8pt" },
+                { tag: "QA-BUG", main: "Crash #502", sub: "Null Pointer", score: "9pt" },
+                { tag: "PROJECT", main: "Scope Creep", sub: "Late Deadline", score: "6pt" },
+                { tag: "AGILE", main: "Disorganized", sub: "Broken Roadmap", score: "7pt" },
+                { tag: "COMMUNITY", main: "Toxic Drama", sub: "High Crisis", score: "8pt" },
+                { tag: "SUPPORT", main: "100+ Tickets", sub: "Unresolved Queue", score: "5pt" },
+                { tag: "DEVOPS", main: "CI/CD Fail", sub: "Build Error 137", score: "9pt" },
+                { tag: "PERF", main: "Memory Leak", sub: "High Heap Usage", score: "10pt" }
+            ];
+
+            const masterSolutionPool = [
+                { 
+                    title: "Total Community & Security Shield", 
+                    badge: "COMMUNITY ARCHITECTURE", 
+                    icon: "🛡️" 
+                },
+                { 
+                    title: "100% QA Passed & Zero-Downtime Deploy", 
+                    badge: "QA AUTOMATION SUITE", 
+                    icon: "⚡" 
+                },
+                { 
+                    title: "Optimized Agile Sprint & Crystal Roadmap", 
+                    badge: "PROJECT MANAGEMENT", 
+                    icon: "✦" 
+                },
+                { 
+                    title: "Automated Workflow & Zero-Inbox System", 
+                    badge: "WORKFLOW ARCHITECTURE", 
+                    icon: "★" 
+                },
+                { 
+                    title: "Full-Stack Crisis Resolution & Stability", 
+                    badge: "ALL-ROUND PROBLEM SOLVER", 
+                    icon: "💎" 
+                }
+            ];
+
+            /* ==========================================================================
+               AŞAMA 2: ÇEKİRDEK İŞLEM (KUTUSUZ, DOĞRUDAN LOGO REAKSİYONU)
+               - Girişte: Problem çarpışınca logo %5 büyür ve kırmızımsı neon drop-shadow parlar
+               - Çıkışta: Master çözüm doğarken logo %10 büyür ve güçlü cyan drop-shadow parlar
+               ========================================================================== */
+            function triggerCoreReaction(isFinalSynthesis = false) {
+                if (isFinalSynthesis) {
+                    // Çözüm Çıkış Reaksiyonu (Güçlü Cyan Parlama)
+                    gsap.fromTo(coreLogo, 
+                        {
+                            scale: 1.14,
+                            filter: 'drop-shadow(0 0 32px rgba(0, 240, 255, 1))'
+                        },
+                        {
+                            scale: 1,
+                            filter: 'drop-shadow(0 0 16px rgba(0, 210, 255, 0.65))',
+                            duration: 0.45,
+                            ease: "power2.out"
+                        }
+                    );
+                } else {
+                    // Problem Giriş Reaksiyonu (Hafif Kırmızı Darbe)
+                    gsap.fromTo(coreLogo, 
+                        {
+                            scale: 1.05,
+                            filter: 'drop-shadow(0 0 24px rgba(255, 51, 102, 0.85))'
+                        },
+                        {
+                            scale: 1,
+                            filter: 'drop-shadow(0 0 16px rgba(0, 210, 255, 0.65))',
+                            duration: 0.28,
+                            ease: "power2.out"
+                        }
+                    );
+                }
+            }
+
+            /* ==========================================================================
+               AŞAMA 1: LOGOYA YAKIN ALANDA SPAWN & VAKUMLANMA
+               ========================================================================== */
+            function spawnAndVacuumProblem(index, totalInBatch, onImpact) {
+                const itemData = problemPool[Math.floor(Math.random() * problemPool.length)];
+                const el = document.createElement('div');
+                el.className = 'chaos-item';
+                el.innerHTML = `
+                    <div class="chaos-header">
+                        <span class="chaos-tag">[${itemData.tag}]</span>
+                        <span class="chaos-score">${itemData.score}</span>
+                    </div>
+                    <span class="chaos-main-text">${itemData.main}</span>
+                    <span class="chaos-sub-val">${itemData.sub}</span>
+                `;
+                
+                heroScene.appendChild(el);
+
+                const centerX = window.innerWidth * 0.5;
+                const centerY = window.innerHeight * 0.5;
+
+                const spawnDistanceX = 230 + (Math.random() * 130);
+                const startX = centerX - spawnDistanceX;
+                const startY = centerY + (Math.random() * 260 - 130);
+                const randomRotateZ = (Math.random() * 30 - 15);
+
+                const targetX = centerX - 45;
+                const targetY = centerY - 25;
+
+                gsap.set(el, {
+                    x: startX,
+                    y: startY,
+                    rotationZ: randomRotateZ,
+                    scale: 0.85,
+                    opacity: 0
+                });
+
+                const tl = gsap.timeline();
+
+                // 1. Yumuşak belirme
+                tl.to(el, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.45,
+                    ease: "power2.out"
+                });
+
+                // 2. Merkeze doğru ivmeli vakum çekimi
+                tl.to(el, {
+                    x: targetX,
+                    y: targetY,
+                    rotationZ: randomRotateZ * 2.2,
+                    duration: 1.4,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        const isLastItem = (index === totalInBatch - 1);
+                        triggerCoreReaction(isLastItem);
+                        if (typeof onImpact === 'function') onImpact(isLastItem);
+                    }
+                }, "-=0.15");
+
+                // 3. Logoda yutulma
+                tl.to(el, {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.2,
+                    ease: "power1.in",
+                    onComplete: () => {
+                        el.remove();
+                    }
+                });
+
+                return tl;
+            }
+
+            /* ==========================================================================
+               AŞAMA 3: PRİSTİNE CRYSTAL MASTER ÇÖZÜM ÇIKTISI
+               ========================================================================== */
+            function spawnAndConveyMasterSolution(absorbedCount) {
+                const itemData = masterSolutionPool[Math.floor(Math.random() * masterSolutionPool.length)];
+                const el = document.createElement('div');
+                el.className = 'solution-cube';
+                el.innerHTML = `
+                    <div class="solution-icon-wrap">${itemData.icon}</div>
+                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                        <span class="solution-badge">${itemData.badge} &bull; ${absorbedCount} SOLVED</span>
+                        <span class="solution-title">${itemData.title}</span>
+                    </div>
+                `;
+                
+                heroScene.appendChild(el);
+
+                const centerX = window.innerWidth * 0.5;
+                const centerY = window.innerHeight * 0.5;
+
+                const startY = centerY - 25;
+                const startX = centerX + 85;
+                const endX = window.innerWidth + 350;
+
+                gsap.set(el, {
+                    x: startX,
+                    y: startY,
+                    scale: 0.2,
+                    opacity: 0
+                });
+
+                const tl = gsap.timeline();
+
+                // 1. Çekirdekten sağa doğru yumuşak kristalize çıkış
+                tl.to(el, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.55,
+                    ease: "back.out(1.6)"
+                });
+
+                // 2. Sağa doğru süzülüş
+                tl.to(el, {
+                    x: endX,
+                    duration: 5.5,
+                    ease: "none",
+                    onComplete: () => {
+                        el.remove();
+                    }
+                }, "-=0.1");
+
+                return tl;
+            }
+
+            /* ==========================================================================
+               ANİMASYON RİTMİ & MASTER DÖNGÜ (3 -> 2 -> 4)
+               ========================================================================== */
+            const batchPattern = [3, 2, 4];
+            let currentBatchIndex = 0;
+
+            function runNextBatch() {
+                const count = batchPattern[currentBatchIndex];
+
+                const batchTimeline = gsap.timeline({
+                    onComplete: () => {
+                        currentBatchIndex = (currentBatchIndex + 1) % batchPattern.length;
+                        gsap.delayedCall(1.2, runNextBatch);
+                    }
+                });
+
+                for (let i = 0; i < count; i++) {
+                    const delay = i * 0.65;
+
+                    batchTimeline.add(() => {
+                        spawnAndVacuumProblem(i, count, (isLastItem) => {
+                            if (isLastItem) {
+                                spawnAndConveyMasterSolution(count);
+                            }
+                        });
+                    }, delay);
+                }
+
+                batchTimeline.to({}, { duration: (count * 0.65) + 2.6 });
+            }
+
+            // Başlat
+            runNextBatch();
+
+            /* ==========================================================================
+               İNTERAKTİF 3D MOUSE MANYETİK PARALAKS (BESPOKE FEEL)
+               ========================================================================== */
+            window.addEventListener('mousemove', (e) => {
+                const xPos = (e.clientX / window.innerWidth - 0.5) * 20;
+                const yPos = (e.clientY / window.innerHeight - 0.5) * 20;
+
+                gsap.to(coreWrapper, {
+                    rotationY: xPos,
+                    rotationX: -yPos,
+                    duration: 0.8,
+                    ease: "power1.out"
+                });
+            });
+
+            coreWrapper.addEventListener('mouseenter', () => {
+                gsap.to(coreLogo, { scale: 1.1, duration: 0.35, ease: "back.out(2)" });
+            });
+
+            coreWrapper.addEventListener('mouseleave', () => {
+                gsap.to(coreLogo, { scale: 1, duration: 0.35, ease: "power2.out" });
+            });
+        });
+    </script>
+</body>
+</html>

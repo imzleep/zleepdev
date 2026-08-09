@@ -1,3 +1,6 @@
+/* ==========================================================================
+   GLOBAL DESIGN TOKENS & RESET
+   ========================================================================== */
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
@@ -5,143 +8,331 @@ html {
 }
 
 body {
-    background-color: #050505;
+    background-color: #04060a;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #e2e8f0;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.font-heading {
+h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: 'Outfit', sans-serif;
 }
 
+/* ==========================================================================
+   SABİT TÜM SAYFA NÖRAL AĞ CANVAS ARKA PLANI
+   ========================================================================== */
+.neural-network-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.65;
+    filter: blur(2px);
+    will-change: transform;
+}
+
+/* ==========================================================================
+   MODERN GLASSMORPHISM & THEME UTILITIES
+   ========================================================================== */
 .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(12, 18, 32, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass:hover {
-    border-color: rgba(139, 92, 246, 0.3);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    border-color: rgba(0, 210, 255, 0.4);
+    background: rgba(16, 26, 46, 0.75);
+    box-shadow: 0 10px 35px rgba(0, 210, 255, 0.15);
 }
 
 .glass-nav {
-    background: rgba(5, 5, 5, 0.7);
+    background: rgba(4, 6, 10, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #a78bfa 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #00f0ff 0%, #a78bfa 50%, #38bdf8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .text-gradient-hover:hover {
-    background: linear-gradient(135deg, #c4b5fd 0%, #60a5fa 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-@keyframes blob {
+/* ==========================================================================
+   HERO CANVAS & COORDINATE STAGE
+   ========================================================================== */
+.hero-animation-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5.5rem;
+    z-index: 10;
+}
+
+/* NDA / Internal Tool Wireframe Banner */
+.nda-wireframe-preview {
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.15) 0%, transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        #090d18;
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+}
+
+/* Master-Detail Project Item Styles */
+.project-tab-btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(12, 18, 32, 0.45);
+}
+
+.project-tab-btn:hover {
+    background: rgba(16, 26, 46, 0.7);
+    border-color: rgba(0, 240, 255, 0.3);
+    transform: translateX(4px);
+}
+
+.project-tab-btn.active {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.12) 0%, rgba(16, 32, 58, 0.85) 100%);
+    border-color: rgba(0, 240, 255, 0.7);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.18), inset 0 0 15px rgba(0, 240, 255, 0.08);
+}
+
+.project-tab-btn.active .project-indicator {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.project-indicator {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   MERKEZ LOGO (GRAND FLOATING LOGO)
+   ========================================================================== */
+.core-wrapper {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 175px;
+    height: 175px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    will-change: transform, filter;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    animation: grandFloatingBob 5s ease-in-out infinite alternate;
+}
+
+@keyframes grandFloatingBob {
+    0% { 
+        transform: translate(-50%, -50%) translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translate(-50%, -50%) translateY(-12px) rotate(1.5deg); 
+    }
+    100% { 
+        transform: translate(-50%, -50%) translateY(-18px) rotate(-1.5deg); 
+    }
+}
+
+.core-logo-img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 22px rgba(0, 210, 255, 0.7));
+    will-change: transform, filter;
+    pointer-events: none;
+    transition: filter 0.3s ease;
+    animation: logoGlowBreath 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlowBreath {
     0% {
-        transform: translate(0px, 0px) scale(1);
+        filter: drop-shadow(0 4px 18px rgba(0, 210, 255, 0.6));
     }
-
-    33% {
-        transform: translate(30px, -50px) scale(1.1);
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
-
     100% {
-        transform: translate(0px, 0px) scale(1);
+        filter: drop-shadow(0 6px 28px rgba(0, 240, 255, 0.85));
     }
 }
 
-@keyframes float-logo {
+/* ==========================================================================
+   GİRDİ: KAOTİK PROBLEM ROZETLERİ (SIMPLE & CLEAN CHAOS ITEMS)
+   ========================================================================== */
+.chaos-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background: rgba(26, 10, 18, 0.94);
+    border: 1.5px solid rgba(255, 51, 102, 0.75);
+    border-radius: 10px;
+    color: #fce7f3;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.9),
+        0 0 16px rgba(255, 51, 102, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 15;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
 
-    0%,
-    100% {
-        transform: translateY(0px);
-        filter: drop-shadow(0 0 15px rgba(50, 100, 255, 0.5));
+.chaos-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ff3366;
+    box-shadow: 0 0 8px #ff3366;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   ÇIKTI: PRİSTİNE CRYSTAL MASTER ÇÖZÜM KAPSÜLÜ (MINIMAL & CRYSTAL)
+   ========================================================================== */
+.solution-cube {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 48px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, rgba(8, 32, 54, 0.96) 0%, rgba(4, 18, 34, 0.98) 100%);
+    border: 1.5px solid rgba(0, 240, 255, 0.9);
+    border-radius: 12px;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.95),
+        0 0 25px rgba(0, 240, 255, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 15;
+    pointer-events: none;
+    will-change: transform, opacity;
+    white-space: nowrap;
+}
+
+.solution-icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(0, 240, 255, 0.2);
+    border: 1px solid rgba(0, 240, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00f0ff;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBİL OPTİMİZASYONLARI
+   ========================================================================== */
+@media (max-width: 640px) {
+    .core-wrapper {
+        width: 120px;
+        height: 120px;
+        top: 50%;
     }
-
-    50% {
-        transform: translateY(-12px);
-        filter: drop-shadow(0 0 20px rgba(60, 130, 255, 0.8)) drop-shadow(0 0 40px rgba(30, 60, 200, 0.6));
+    .core-logo-img {
+        width: 105px;
+        height: 105px;
+    }
+    .chaos-item {
+        padding: 5px 10px;
+        font-size: 0.74rem;
+        border-radius: 8px;
+        gap: 5px;
+        max-width: calc(48vw - 12px);
+    }
+    .chaos-item span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .solution-cube {
+        height: 38px;
+        padding: 0 12px;
+        font-size: 0.8rem;
+        border-radius: 10px;
+        gap: 7px;
+        max-width: calc(60vw - 10px);
+    }
+    .solution-cube span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .solution-icon-wrap {
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
+        border-radius: 6px;
     }
 }
 
-.animate-blob {
-    animation: blob 7s infinite;
+.solution-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    color: #00f0ff;
+    letter-spacing: 0.06em;
 }
 
-.animate-float-logo {
-    animation: float-logo 4s ease-in-out infinite;
+.solution-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
 }
 
-.animation-delay-2000 {
-    animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-    animation-delay: 4s;
-}
-
-.lang-hidden {
-    display: none !important;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #050505;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scroll-snap-x {
-    scroll-snap-type: x mandatory;
-}
-
-.scroll-snap-center {
-    scroll-snap-align: center;
-}
-
+/* ==========================================================================
+   CAROUSEL & TESTIMONIALS UTILITIES
+   ========================================================================== */
 .carousel-card {
     width: 100%;
     flex: 0 0 100%;
@@ -152,4 +343,45 @@ h6,
         width: calc((100% - 4rem) / 3);
         flex: 0 0 calc((100% - 4rem) / 3);
     }
+}
+
+.animate-float-logo {
+    animation: float-logo 4s ease-in-out infinite;
+}
+
+@keyframes float-logo {
+    0%, 100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.5));
+    }
+    50% {
+        transform: translateY(-12px);
+        filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8));
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #04060a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
